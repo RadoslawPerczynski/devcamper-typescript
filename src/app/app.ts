@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application } from 'express';
 
 // var createError = require('http-errors');
 // var express = require('express');
@@ -6,10 +6,11 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 // var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 
-var indexRouter = require('./routes/home');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/home');
+// var usersRouter = require('./routes/users');
 // var usersRouter = require('./routes/users');
 // var indexRouter = require('./routes/home');
+import { homeRouter } from './routes/home';
 
 // ==================
 // view engine setup
@@ -37,20 +38,8 @@ var usersRouter = require('./routes/users');
 //   res.render('error');
 // });
 
-export const app: Application = express();
+const app: Application = express();
 
-const add = (a: number, b: number): number => {
-  return a + b;
-};
+app.use('/home', homeRouter);
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  console.log(add(4, 10));
-  res.send('Hello WOrld');
-});
-
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
-// app.listen(5000, () => console.log('Server running'));
-
-// module.exports = app;
+export { app };
