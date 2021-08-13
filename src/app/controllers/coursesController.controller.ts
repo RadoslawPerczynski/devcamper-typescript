@@ -1,9 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-export const getAllCourses = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getAllCourses = (req: Request, res: Response) => {
   const all = [
     {
       name: 'Course 1',

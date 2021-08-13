@@ -40,6 +40,17 @@ import { appRouting } from './appRouting.routing';
 
 const app: Application = express();
 
+app.use(function timeLog(req, res, next) {
+  console.log(req.originalUrl);
+  console.log('Middleware 1 mount to app directly: ', Date.now());
+  next();
+});
+
+app.use(function timeLog(req, res, next) {
+  console.log('Middleware 2 mount to app directly: ', Date.now());
+  next();
+});
+
 app.use('/', appRouting);
 
 export { app };

@@ -8,6 +8,16 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
+// router.use(function (req, res, next) {
+//   if (!req.headers['x-auth']) {
+//     console.log('Bootcamps no x-auth. next(router) ');
+
+//     // return next('router');
+//     return next('router');
+//   }
+//   next();
+// });
+
 router.get('/', getAllBootcamps);
 
 // router.get('/', function (req: Request, res: Response, next: NextFunction) {

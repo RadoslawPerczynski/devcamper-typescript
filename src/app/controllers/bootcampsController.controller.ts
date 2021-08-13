@@ -14,11 +14,7 @@
 // export { BootcampController };
 
 import { Request, Response, NextFunction } from 'express';
-export const getAllBootcamps = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getAllBootcamps = (req: Request, res: Response) => {
   const all = [
     {
       name: 'I am the bootcamp 1',
