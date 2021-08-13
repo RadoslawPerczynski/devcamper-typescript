@@ -10,7 +10,7 @@ import express, { Application } from 'express';
 // var usersRouter = require('./routes/users');
 // var usersRouter = require('./routes/users');
 // var indexRouter = require('./routes/home');
-import { homeRouter } from './routes/home';
+import { appRouting } from './appRouting.routing';
 
 // ==================
 // view engine setup
@@ -40,6 +40,6 @@ import { homeRouter } from './routes/home';
 
 const app: Application = express();
 
-app.use('/home', homeRouter);
+app.use('/', appRouting);
 
 export { app };
