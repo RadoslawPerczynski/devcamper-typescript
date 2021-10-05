@@ -1,8 +1,12 @@
 /**
  * Module dependencies.
  */
+
+// LOAD env variables
+import './config/env';
 import { app } from './app';
 import http from 'http';
+
 // var debug = require('debug')('test:server');
 
 /**
@@ -19,6 +23,7 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
 server.listen(port);
 server.on('listening', onListening);
 server.on('error', onError);
@@ -75,7 +80,7 @@ function onError(error: any) {
 
 function onListening() {
   var addr = server.address();
-  console.log('Server running');
+  console.log(`Server running on port ${process.env.PORT}`);
   // var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   // debug('Listening on ' + bind);
 }

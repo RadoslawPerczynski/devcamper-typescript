@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { bootcampController } from '../controllers/bootcampsController.controller';
+import { bootcampController } from '../controllers/bootcampController.controller';
 const router = express.Router();
 
 // router.route('/').get(getAllBootcamps).post(createBootcamp);
