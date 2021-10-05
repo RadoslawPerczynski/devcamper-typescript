@@ -1,14 +1,12 @@
 import express from 'express';
 import { bootcampsRouting } from './routes/bootcamps.routing';
-import { coursesRouting } from './routes/courses.routing';
+import morgan from 'morgan';
+import { UrlConstants } from './urlConstants.constants';
+
 const router = express.Router();
 
-router.use(function timeLog(req, res, next) {
-  console.log('Global middleware routing time: ', Date.now());
-  console.log(req.url);
-  next();
-});
-router.use('/bootcamps', bootcampsRouting);
-router.use('/courses', coursesRouting);
+router.use(morgan('dev'));
+
+router.use(UrlConstants.bootcamps.getBootcamps, bootcampsRouting);
 
 export { router as appRouting };
