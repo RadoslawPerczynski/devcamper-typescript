@@ -1,11 +1,15 @@
 /**
  * Module dependencies.
  */
-
-// LOAD env variables
 import { app } from './app';
 import http from 'http';
+
+// LOAD env variables
 import { envVariables } from './utils/config';
+import { connectDB } from './utils/db';
+
+// Connect to DB
+connectDB();
 
 // var debug = require('debug')('test:server');
 
