@@ -12,7 +12,7 @@ import { envVariables } from './utils/config';
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '5000');
+const port = normalizePort(envVariables.PORT || '5000');
 app.set('port', port);
 
 /**
@@ -79,11 +79,8 @@ function onError(error: any) {
  */
 
 function onListening() {
-  var addr = server.address();
-  console.log(`Server running on port ${process.env.PORT}`);
-  console.log('radek sika na ', process.env.NODE_ENV);
-  console.log('radek mongo db ', process.env.MONGO_URI);
-  console.log('radek env vars db ', envVariables.MONGO_URI);
+  const addr = server.address();
+  console.log(`Server running on port ${envVariables.PORT}`);
   // var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   // debug('Listening on ' + bind);
 }

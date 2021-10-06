@@ -16,5 +16,7 @@ switch (process.env.NODE_ENV) {
 config({ path: resolve(__dirname, `${path}`) });
 
 export const envVariables = {
+  NODE_ENV: process.env.NODE_ENV,
   MONGO_URI: process.env.MONGO_URI,
+  PORT: process.env.PORT,
 };
