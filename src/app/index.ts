@@ -3,9 +3,9 @@
  */
 
 // LOAD env variables
-import './config/env';
 import { app } from './app';
 import http from 'http';
+import { envVariables } from './utils/config';
 
 // var debug = require('debug')('test:server');
 
@@ -81,6 +81,9 @@ function onError(error: any) {
 function onListening() {
   var addr = server.address();
   console.log(`Server running on port ${process.env.PORT}`);
+  console.log('radek sika na ', process.env.NODE_ENV);
+  console.log('radek mongo db ', process.env.MONGO_URI);
+  console.log('radek env vars db ', envVariables.MONGO_URI);
   // var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   // debug('Listening on ' + bind);
 }
