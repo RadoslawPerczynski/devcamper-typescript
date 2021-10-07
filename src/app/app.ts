@@ -6,10 +6,6 @@ import express, { Application } from 'express';
 // var cookieParser = require('cookie-parser');
 // var logger = require('morgan');
 
-// var indexRouter = require('./routes/home');
-// var usersRouter = require('./routes/users');
-// var usersRouter = require('./routes/users');
-// var indexRouter = require('./routes/home');
 import { appRouting } from './appRouting.routing';
 
 // ==================
@@ -40,11 +36,8 @@ import { appRouting } from './appRouting.routing';
 
 const app: Application = express();
 
-// app.use(function timeLog(req, res, next) {
-//   console.log(req.originalUrl);
-//   console.log('Middleware 1 mount to app directly: ', Date.now());
-//   next();
-// });
+// Parse JSON bodies for this app - officially supported middleware for express to parse the bodies of requests.
+app.use(express.json());
 
 app.use('/', appRouting);
 
