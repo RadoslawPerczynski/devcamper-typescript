@@ -31,15 +31,21 @@ class BootcampController {
    * @route POST api/v1/bootcamps
    * @access Private
    */
-  createBootcamp(req: Request, res: Response) {
-    const newBootcamp = new BootcampModel({
-      name: 'Frontend dev bootcamp',
-      description: 'The best bootcamp you have ever heard of!',
+  async createBootcamp(req: Request, res: Response) {
+    const newBootcamp = new BootcampModel(req.body);
+
+    // const bootcampSaved = await newBootcamp.save();
+    await newBootcamp.save((err) => {
+      if (err) {
+        return res
+          .status(400)
+          .json({ success: false, msg: err.message, name: err.name });
+      } else {
+        res.status(201).json({ success: true, data: newBootcamp });
+      }
     });
 
-    // await newBootcamp.save();
-
-    res.status(200).json({ success: true, msg: 'Create a new bootcamp' });
+    // const bootcamp = await BootcampModel.create(req.body); // this is working
   }
 
   /**

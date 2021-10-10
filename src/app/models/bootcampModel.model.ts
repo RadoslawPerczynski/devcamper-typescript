@@ -8,16 +8,26 @@ interface Bootcamp {
 }
 
 // 2. Create a Schema corresponding to the document interface.
-const bootcampSchema = new Schema<Bootcamp>({
-  name: {
-    type: String,
-    required: true,
+const bootcampSchema = new Schema<Bootcamp>(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please add a name'],
+      unique: true,
+      trim: true,
+      minlength: [5, 'Name cannot be less than 5 characters'],
+      maxlength: [50, 'Name cannot be more than 50 characters'],
+    },
+    description: {
+      type: String,
+      required: true,
+      maxlength: [500, 'Description cannot be more than 50 characters'],
+    },
   },
-  description: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    timestamps: true, // adds created_at & updated_at
+  }
+);
 
 // 3. Create a Model.
 export const BootcampModel = model<Bootcamp>('Bootcamp', bootcampSchema);
