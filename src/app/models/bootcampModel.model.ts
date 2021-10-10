@@ -15,7 +15,7 @@ const bootcampSchema = new Schema<Bootcamp>(
       required: [true, 'Please add a name'],
       unique: true,
       trim: true,
-      minlength: [5, 'Name cannot be less than 5 characters'],
+      minlength: [5, 'Name cannot be less than 5 characters, got {VALUE}'],
       maxlength: [50, 'Name cannot be more than 50 characters'],
     },
     description: {
