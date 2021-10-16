@@ -9,7 +9,7 @@ class BootcampController {
    * @route GET api/v1/bootcamps
    * @access Public
    */
-  async getAllBootcamps(req: Request, res: Response) {
+  async getAllBootcamps(req: Request, res: Response, next: NextFunction) {
     try {
       const allBootcamps = await BootcampModel.find({});
       return res.status(200).json({
@@ -18,7 +18,7 @@ class BootcampController {
         data: allBootcamps,
       });
     } catch (error) {
-      return res.status(400).json({ success: false, msg: error });
+      return next(error);
     }
   }
 
@@ -44,9 +44,6 @@ class BootcampController {
 
       return res.status(200).json({ success: true, data: foundBootcamp });
     } catch (error) {
-      // next(
-      //   new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
-      // );
       next(error);
     }
   }
@@ -56,29 +53,15 @@ class BootcampController {
    * @route POST api/v1/bootcamps
    * @access Private
    */
-  async createBootcamp(req: Request, res: Response) {
+  async createBootcamp(req: Request, res: Response, next: NextFunction) {
     // DELEGATE THIS LOGIC TO A SERVICE!
     const newBootcamp = new BootcampModel(req.body);
 
-    // const bootcampSaved = await newBootcamp.save();
-
-    // here we have access to the error props- this seems to be according to doc
-    // newBootcamp.save((err) => {
-    //   if (err) {
-    //     return res
-    //       .status(400)
-    //       .json({ success: false, msg: err.message, name: err.name });
-    //   } else {
-    //     res.status(201).json({ success: true, data: newBootcamp });
-    //   }
-    // });
-
-    // with this try-catch we don't have access to the error props because TS doesn't know the error.
     try {
       await newBootcamp.save();
       return res.status(201).json({ success: true, data: newBootcamp });
     } catch (error: any) {
-      return res.status(400).json({ success: false, msg: error.message });
+      next(error);
     }
   }
 
@@ -87,7 +70,7 @@ class BootcampController {
    * @route PUT api/v1/bootcamp/:id
    * @access Private
    */
-  async updateBootcamp(req: Request, res: Response) {
+  async updateBootcamp(req: Request, res: Response, next: NextFunction) {
     const bootcampID: string = req.params.id;
     const bootcampDataToUpdate = req.body;
 
@@ -99,15 +82,17 @@ class BootcampController {
       );
 
       if (!updatedBootcamp) {
-        return res.status(400).json({
-          success: false,
-          msg: 'correctly formatted ID but not found',
-        });
+        return next(
+          new ErrorResponse(
+            `Bootcamp id correctly formatted, but not found with id of ${req.params.id}`,
+            404
+          )
+        );
       }
 
       return res.status(200).json({ success: true, data: updatedBootcamp });
     } catch (error) {
-      return res.status(400).json({ success: false, msg: error });
+      next(error);
     }
   }
 
@@ -116,7 +101,7 @@ class BootcampController {
    * @route DELETE api/v1/bootcamp/:id
    * @access Private
    */
-  async deleteBootcamp(req: Request, res: Response) {
+  async deleteBootcamp(req: Request, res: Response, next: NextFunction) {
     const bootcampID: string = req.params.id;
 
     try {
@@ -125,15 +110,17 @@ class BootcampController {
       );
 
       if (!bootcampToDelete) {
-        return res.status(400).json({
-          success: false,
-          msg: 'correctly formatted ID but not found',
-        });
+        return next(
+          new ErrorResponse(
+            `Bootcamp id correctly formatted, but not found with id of ${req.params.id}`,
+            404
+          )
+        );
       }
 
       return res.status(200).json({ success: true, data: {} });
     } catch (error) {
-      return res.status(400).json({ success: false, msg: error });
+      next(error);
     }
   }
 }
