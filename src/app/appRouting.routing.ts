@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Response, Request } from 'express';
 import { bootcampsRouting } from './routes/bootcamps.routing';
 import morgan from 'morgan';
 import { UrlConstants } from './urlConstants.constants';

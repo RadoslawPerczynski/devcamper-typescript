@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import { CallbackError } from 'mongoose';
 import { BootcampModel } from '../models/bootcampModel.model';
+import { ErrorResponse } from '../utils/errorResponse';
 
 class BootcampController {
   /**
@@ -7,19 +9,14 @@ class BootcampController {
    * @route GET api/v1/bootcamps
    * @access Public
    */
-  // getAllBootcamps = (req: Request, res: Response) => {
-  //   res.status(200).json({ success: true, msg: 'Get all Bootcamps' });
-  // };
   async getAllBootcamps(req: Request, res: Response) {
     try {
       const allBootcamps = await BootcampModel.find({});
-      return res
-        .status(200)
-        .json({
-          success: true,
-          count: allBootcamps.length,
-          data: allBootcamps,
-        });
+      return res.status(200).json({
+        success: true,
+        count: allBootcamps.length,
+        data: allBootcamps,
+      });
     } catch (error) {
       return res.status(400).json({ success: false, msg: error });
     }
@@ -30,22 +27,27 @@ class BootcampController {
    * @route GET api/v1/bootcamp/:id
    * @access Public
    */
-  async getBootcamp(req: Request, res: Response) {
+  async getBootcamp(req: Request, res: Response, next: NextFunction) {
     const bootcampID: string = req.params.id;
 
     try {
       const foundBootcamp = await BootcampModel.findById(bootcampID);
 
       if (!foundBootcamp) {
-        return res.status(400).json({
-          success: false,
-          msg: 'correctly formatted ID but not found',
-        });
+        return next(
+          new ErrorResponse(
+            `Bootcamp id correctly formatted, but not found with id of ${req.params.id}`,
+            404
+          )
+        );
       }
 
       return res.status(200).json({ success: true, data: foundBootcamp });
     } catch (error) {
-      return res.status(400).json({ success: false, msg: error });
+      // next(
+      //   new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
+      // );
+      next(error);
     }
   }
 
@@ -75,8 +77,8 @@ class BootcampController {
     try {
       await newBootcamp.save();
       return res.status(201).json({ success: true, data: newBootcamp });
-    } catch (error) {
-      return res.status(400).json({ success: false, msg: error });
+    } catch (error: any) {
+      return res.status(400).json({ success: false, msg: error.message });
     }
   }
 
