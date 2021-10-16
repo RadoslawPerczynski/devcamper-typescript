@@ -7,7 +7,7 @@ import express, { Application } from 'express';
 // var logger = require('morgan');
 
 import { appRouting } from './appRouting.routing';
-import { errorHandler } from './middleware/error';
+import { customErrorHandler } from './middleware/customErrorHandler';
 
 // ==================
 // view engine setup
@@ -41,5 +41,5 @@ const app: Application = express();
 app.use(express.json());
 
 app.use('/', appRouting);
-app.use(errorHandler);
+app.use(customErrorHandler);
 export { app };

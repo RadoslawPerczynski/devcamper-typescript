@@ -1,12 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { bootcampController } from '../controllers/bootcampController.controller';
+import { asyncHandler } from '../middleware/asyncHandler';
 const router = express.Router();
 
-// router.route('/').get(getAllBootcamps).post(createBootcamp);
 router
   .route('/')
-  .get(bootcampController.getAllBootcamps)
-  .post(bootcampController.createBootcamp);
+  .get(asyncHandler(bootcampController.getAllBootcamps))
+  .post(asyncHandler(bootcampController.createBootcamp));
 
 router
   .route('/:id')

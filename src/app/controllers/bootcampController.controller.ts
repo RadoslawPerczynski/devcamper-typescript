@@ -55,14 +55,11 @@ class BootcampController {
    */
   async createBootcamp(req: Request, res: Response, next: NextFunction) {
     // DELEGATE THIS LOGIC TO A SERVICE!
+    // we don't have to catch the error here, because at the bootcamps routing level, we pass this 'createBootcamp' functions as a param to asynHandler and
+    // the async handler is catching any errors that occur.
     const newBootcamp = new BootcampModel(req.body);
-
-    try {
-      await newBootcamp.save();
-      return res.status(201).json({ success: true, data: newBootcamp });
-    } catch (error: any) {
-      next(error);
-    }
+    await newBootcamp.save();
+    return res.status(201).json({ success: true, data: newBootcamp });
   }
 
   /**
@@ -91,8 +88,8 @@ class BootcampController {
       }
 
       return res.status(200).json({ success: true, data: updatedBootcamp });
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   }
 
